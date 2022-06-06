@@ -13,7 +13,7 @@ export class CreatePatientAccountAsset extends BaseAsset {
     $id: 'patient/createPatientAccount-asset',
 		title: 'CreatePatientAccountAsset transaction asset for patient module',
 		type: 'object',
-		required: ['patientIdentificationNumber', 'username'],
+		required: ['patientIdentificationNumber', 'areaCode', 'username'],
 		properties: {
 			patientIdentificationNumber: {
 				dataType: 'string',
@@ -23,17 +23,35 @@ export class CreatePatientAccountAsset extends BaseAsset {
 				dataType: 'string',
 				fieldNumber: 2,
 			},
+			areaCode: {
+				dataType: 'string',
+				fieldNumber: 3,
+			},
 		},
   	};
 
 	public validate({ asset }: ValidateAssetContext<{}>): void {
-		// Verify if client fill patient Identification Number case
+		// Verify if client fill patient Identification Number box
 		if (!asset.patientIdentificationNumber) {
 			throw new Error('You must enter your identification number');
 		};
-		// Implement checking identity procedure (redirect the client to national database for example)
 
+		// Implement checking identity procedure (redirect the client to national database for example and verify identity)
+
+		/**
+		 * */ 
+
+		// Verify if client fill areaCode box
+		if (!asset.areaCode) {
+			throw new Error('You must enter your areaCode, you can find it on https://skalleo.io');
+		};
+
+		// Implement checking areaCode procedure (redirect the client to national database for example and verify if this zone is concerned)
+
+		/**
+		 * */
 		
+
 		// Verify if username is valid
 		const chunks = asset.username.split(/\./);
 
@@ -44,8 +62,8 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		if (!VALID_PATIENT_DOMAIN.includes(chunks[1])) {
 			throw new Error(`Invalid domain found "${chunks[1]}". Valid TLDs are "${VALID_PATIENT_DOMAIN.join()}"`);
 		};
-		
-	}
+
+	
 
 		
 
