@@ -1,6 +1,6 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
 
-import { VALID_PATIENT_DOMAIN } from '../data/create_patient_account';
+import { VALID_PATIENT_DOMAIN } from '../data/utils';
 
 
 
@@ -47,6 +47,7 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		};
 
 		// Implement checking areaCode procedure (redirect the client to national database for example and verify if this zone is concerned)
+		// and verify it after with apply
 
 		/**
 		 * */
@@ -71,7 +72,7 @@ export class CreatePatientAccountAsset extends BaseAsset {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
 	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<{}>): Promise<void> {
-			throw new Error('Asset "createPatientAccount" apply hook is not implemented.');
+		
 	}
 
 
