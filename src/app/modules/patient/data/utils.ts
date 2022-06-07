@@ -1,4 +1,5 @@
 import { codec, cryptography } from 'lisk-sdk';
+import { PatientModuleProps } from '../interface';
 
 const VALID_PATIENT_DOMAIN = ['adh'];
 

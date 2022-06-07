@@ -1,4 +1,6 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
+import { CreatePatientAccountAssetProps } from '../assets/interface';
+import { PatientModuleProps } from '../interface';
 
 const {
 	VALID_PATIENT_DOMAIN,
@@ -10,7 +12,7 @@ const {
 
 
 
-export class CreatePatientAccountAsset extends BaseAsset {
+export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAssetProps> {
 	public name = 'createPatientAccount';
   	public id = 1;
 
@@ -36,7 +38,7 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		},
   	};
 
-	public validate({ asset }: ValidateAssetContext<{}>): void {
+	public validate({ asset }: ValidateAssetContext<CreatePatientAccountAssetProps>): void {
 		// Verify if client fill patient Identification Number box
 		if (!asset.patientIdentificationNumber) {
 			throw new Error('You must enter your identification number');
@@ -77,10 +79,10 @@ export class CreatePatientAccountAsset extends BaseAsset {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<{}>): Promise<void> {
+	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<CreatePatientAccountAssetProps>): Promise<void> {
 		//create Patient account
 		const senderAddress = transaction.senderAddress;
-		const senderAccount = await stateStore.account.get(senderAddress);
+		const senderAccount = await stateStore.account.get<PatientModuleProps>(senderAddress);
 
 		const patientAccounts = await getAllPatientAccounts(stateStore);
 	
@@ -97,26 +99,26 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		}
 
 		//Admit only one patient account by the way
-		if (senderAccount.patient.selfPatient) {
+		if (senderAccount.selfPatient) {
 			throw new Error('You have already a patient account !')
 		}
 
 		//Verify if areaCode is valid
-		if (!(areaCode in CHAIN_STATE_POOL_ACCOUNTS)) {
+		/**if (!(asset.areaCode in CHAIN_STATE_POOL_ACCOUNTS)) {
 			throw new Error('Your area is not yet concerned, sorry !');
-		}
+		}*/
 
 		const patientAccount = createPatientAccount({
 			patientIdentificationNumber: asset.patientIdentificationNumber,
         	areaCode: asset.areaCode,
         	username: asset.username,
         	ownerAddress: senderAddress,
-			nonce: asset.nonce,
+			nonce: transaction.nonce,
 		});
 
 		//update sender account with unique Patient username
-		senderAccount.patient.selfPatient = patientAccount;
-		senderAccount.patient.reverseLookup = patientAccount.username;
+		senderAccount.selfPatient = patientAccount;
+		senderAccount.reverseLookup = patientAccount.username;
 		await stateStore.account.set(senderAddress, senderAccount);
 		
 		//save patient
