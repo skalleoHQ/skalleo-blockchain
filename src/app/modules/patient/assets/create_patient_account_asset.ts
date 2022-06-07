@@ -53,7 +53,7 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		};
 
 		// Implement checking areaCode procedure (redirect the client to national database for example and verify if this zone is concerned)
-		// OR verify it with apply we can look CHAIN_STATE_POOL_ACCOUNTS if the areaCode is available
+		// OR verify it with apply: we can look CHAIN_STATE_POOL_ACCOUNTS if the areaCode is available
 
 		/**
 		 * */
@@ -81,9 +81,22 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		//create Patient account
 		const senderAddress = transaction.senderAddress;
 		const senderAccount = await stateStore.account.get(senderAddress);
-		const areaCode = asset.areaCode;
 
-		//Admit only one patient account per account
+		const patientAccounts = await getAllPatientAccounts(stateStore);
+	
+		//Each patientIdentificationNumber has only one account
+		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.id.equals(asset.patientIdentificationNumber));
+		if (patientIdentificationNumberIndex >= 0) {
+			throw new Error('You have already a patient account !')
+		}
+
+		//Verify if domain is unique
+		const patientUsernameIndex = patientAccounts.findIndex((t) => t.id.equals(asset.username));
+		if (patientUsernameIndex >= 0) {
+			throw new Error('This username is already reserved, please try another.')
+		}
+
+		//Admit only one patient account by the way
 		if (senderAccount.patient.selfPatient) {
 			throw new Error('You have already a patient account !')
 		}
@@ -97,12 +110,13 @@ export class CreatePatientAccountAsset extends BaseAsset {
 			patientIdentificationNumber: asset.patientIdentificationNumber,
         	areaCode: asset.areaCode,
         	username: asset.username,
-        	ownerAddress: asset.ownerAddress,
+        	ownerAddress: senderAddress,
 			nonce: asset.nonce,
 		});
 
-		//update sender account with unique Patient ID
+		//update sender account with unique Patient username
 		senderAccount.patient.selfPatient = patientAccount;
+		senderAccount.patient.reverseLookup = patientAccount.username;
 		await stateStore.account.set(senderAddress, senderAccount);
 		
 		//save patient
@@ -122,6 +136,10 @@ export class CreatePatientAccountAsset extends BaseAsset {
 }
 
 
+
+module.exports = {
+	CreatePatientAccountAsset,
+}
 
 
 

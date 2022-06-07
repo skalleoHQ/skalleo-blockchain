@@ -17,20 +17,20 @@ export class PatientModule extends BaseModule {
     public accountSchema = {
         $id: 'lisk/patient/patientAccount',
         type: 'object',
-        required: ['selfPatient', 'username'],
+        required: ['selfPatient', 'reverseLookup'],
         properties: {
             selfPatient: {
                 dataType: 'bytes',
                 fieldNumber: 1, 
             },
-            username: {
-                dataType: 'bytes',
-                fieldNumber: 1,
+            reverseLookup: {
+                dataType: 'string',
+                fieldNumber: 2,
             },
         },
         default: {
             selfPatient: EMPTY_BUFFER,
-            username: EMPTY_BUFFER,
+            reverseLookup: "",
         }
     }
 
