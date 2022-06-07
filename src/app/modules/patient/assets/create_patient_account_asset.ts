@@ -1,6 +1,12 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
 
-import { VALID_PATIENT_DOMAIN } from '../data/utils';
+const {
+	VALID_PATIENT_DOMAIN,
+	createPatientAccount,
+	getAllPatientAccounts,
+	setAllPatientAccounts,
+
+} = require("../data/utils")
 
 
 
@@ -47,7 +53,7 @@ export class CreatePatientAccountAsset extends BaseAsset {
 		};
 
 		// Implement checking areaCode procedure (redirect the client to national database for example and verify if this zone is concerned)
-		// and verify it after with apply
+		// OR verify it with apply we can look CHAIN_STATE_POOL_ACCOUNTS if the areaCode is available
 
 		/**
 		 * */
@@ -72,7 +78,43 @@ export class CreatePatientAccountAsset extends BaseAsset {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
 	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<{}>): Promise<void> {
+		//create Patient account
+		const senderAddress = transaction.senderAddress;
+		const senderAccount = await stateStore.account.get(senderAddress);
+		const areaCode = asset.areaCode;
+
+		//Admit only one patient account per account
+		if (senderAccount.patient.selfPatient) {
+			throw new Error('You have already a patient account !')
+		}
+
+		//Verify if areaCode is valid
+		if (!(areaCode in CHAIN_STATE_POOL_ACCOUNTS)) {
+			throw new Error('Your area is not yet concerned, sorry !');
+		}
+
+		const patientAccount = createPatientAccount({
+			patientIdentificationNumber: asset.patientIdentificationNumber,
+        	areaCode: asset.areaCode,
+        	username: asset.username,
+        	ownerAddress: asset.ownerAddress,
+			nonce: asset.nonce,
+		});
+
+		//update sender account with unique Patient ID
+		senderAccount.patient.selfPatient = patientAccount;
+		await stateStore.account.set(senderAddress, senderAccount);
 		
+		//save patient
+		const allAccounts = await getAllPatientAccounts(stateStore);
+		allAccounts.push(patientAccount);
+		await setAllPatientAccounts(stateStore, allAccounts);
+
+
+
+
+
+
 	}
 
 

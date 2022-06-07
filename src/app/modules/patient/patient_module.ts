@@ -1,6 +1,8 @@
 /* eslint-disable class-methods-use-this */
 
+import { EMPTY_BUFFER } from '@liskhq/lisk-chain/dist-node/constants';
 import {
+    AccountSchema,
     AfterBlockApplyContext,
 
 
@@ -12,6 +14,28 @@ import {
 import { CreatePatientAccountAsset } from "./assets/create_patient_account_asset";
 
 export class PatientModule extends BaseModule {
+    public accountSchema = {
+        $id: 'lisk/patient/patientAccount',
+        type: 'object',
+        required: ['selfPatient', 'username'],
+        properties: {
+            selfPatient: {
+                dataType: 'bytes',
+                fieldNumber: 1, 
+            },
+            username: {
+                dataType: 'bytes',
+                fieldNumber: 1,
+            },
+        },
+        default: {
+            selfPatient: EMPTY_BUFFER,
+            username: EMPTY_BUFFER,
+        }
+    }
+
+
+
     public actions = {
         // Example below
         // getBalance: async (params) => this._dataAccess.account.get(params.address).token.balance,

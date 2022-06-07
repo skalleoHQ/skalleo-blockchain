@@ -2,6 +2,8 @@ import { codec, cryptography } from 'lisk-sdk';
 
 const VALID_PATIENT_DOMAIN = ['adh'];
 
+const EMPTY_BUFFER = Buffer.alloc(0);
+
 const registeredPatientAccountsSchema = {
     $id: 'patient/registeredAccounts',
     type: 'object',
@@ -119,6 +121,7 @@ const setAllPatientAccounts = async (stateStore, patientAccounts) => {
 
 module.exports = {
     VALID_PATIENT_DOMAIN,
+    EMPTY_BUFFER,
     registeredPatientAccountsSchema,
     CHAIN_STATE_PATIENT_ACCOUNTS,
     createPatientAccount,
