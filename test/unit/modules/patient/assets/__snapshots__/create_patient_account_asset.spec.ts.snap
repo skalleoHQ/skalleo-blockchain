@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreatePatientAccountAsset constructor should have valid schema 1`] = `
+Object {
+  "$id": "patient/createPatientAccount-asset",
+  "properties": Object {
+    "areaCode": Object {
+      "dataType": "string",
+      "fieldNumber": 3,
+    },
+    "patientIdentificationNumber": Object {
+      "dataType": "string",
+      "fieldNumber": 1,
+    },
+    "username": Object {
+      "dataType": "string",
+      "fieldNumber": 2,
+    },
+  },
+  "required": Array [
+    "patientIdentificationNumber",
+    "areaCode",
+    "username",
+  ],
+  "title": "CreatePatientAccountAsset transaction asset for patient module",
+  "type": "object",
+}
+`;

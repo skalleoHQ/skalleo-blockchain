@@ -36,6 +36,17 @@ describe('CreatePatientAccountAsset', () => {
 				)
 			});
 
+			it('should throw error if username has more than one domain', () => {
+				const context = testing.createValidateAssetContext({
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "33_France", username: "by.moussa"},
+					transaction: {senderAddress: Buffer.alloc(0)} as any,
+				});
+				expect(() => transactionAsset.validate(context)).toThrow(
+					'Invalid domain found "moussa". Valid domain is "adh"'
+				)
+			});
+
+
 
 
 			it.todo('should be ok for valid schema');
@@ -48,7 +59,7 @@ describe('CreatePatientAccountAsset', () => {
 		describe('valid cases', () => {
 			it.todo('should update the state store');
 		});
-		
+
 
 		describe('invalid cases', () => {
 			it.todo('should throw error');

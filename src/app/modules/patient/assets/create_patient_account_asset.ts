@@ -72,7 +72,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		};
 
 		if (!VALID_PATIENT_DOMAIN.includes(chunks[1])) {
-			throw new Error(`Invalid domain found "${chunks[1]}". Valid TLDs are "${VALID_PATIENT_DOMAIN.join()}"`);
+			throw new Error(`Invalid domain found "${chunks[1]}". Valid domain is "${VALID_PATIENT_DOMAIN.join()}"`);
 		};
 		
 
