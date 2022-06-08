@@ -1,12 +1,16 @@
 import { codec, cryptography } from 'lisk-sdk';
-import { PatientModuleProps } from '../interface';
+import { RegisteredPatientAccountsSchemaProps } from '../assets/register';
+
 
 const VALID_PATIENT_DOMAIN = ['adh'];
 
+
 const EMPTY_BUFFER = Buffer.alloc(0);
 
+
+
 const registeredPatientAccountsSchema = {
-    $id: 'patient/registeredAccounts',
+    $id: 'lisk/patient/registeredAccounts',
     type: 'object',
     required: ['registeredPatientAccounts'],
     properties: {
@@ -74,7 +78,7 @@ const getAllPatientAccounts = async (stateStore) => {
         return [];
     };
 
-    const registeredAccounts = codec.decode(
+    const registeredAccounts = codec.decode<RegisteredPatientAccountsSchemaProps>(
         registeredPatientAccountsSchema,
         registeredAccountsBuffer
     );
@@ -93,13 +97,13 @@ const getAllPatientAccountsAsJSON = async (dataAccess) => {
         return [];
     };
 
-    const registeredAccounts = codec.decode(
+    const registeredAccounts = codec.decode<RegisteredPatientAccountsSchemaProps>(
         registeredPatientAccountsSchema,
         registeredAccountsBuffer
     );
 
 
-    return codec.toJSON(registeredPatientAccountsSchema, registeredAccounts).registeredPatientAccounts;
+    return codec.toJSON<RegisteredPatientAccountsSchemaProps>(registeredPatientAccountsSchema, registeredAccounts).registeredPatientAccounts;
 };
 
 

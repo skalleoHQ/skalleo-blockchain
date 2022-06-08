@@ -1,6 +1,7 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
-import { CreatePatientAccountAssetProps } from '../assets/interface';
-import { PatientModuleProps } from '../interface';
+import { CreatePatientAccountAssetProps } from './register';
+import { PatientModuleProps } from './register';
+
 
 const {
 	VALID_PATIENT_DOMAIN,
@@ -9,6 +10,7 @@ const {
 	setAllPatientAccounts,
 
 } = require("../data/utils")
+
 
 
 
@@ -39,6 +41,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
   	};
 
 	public validate({ asset }: ValidateAssetContext<CreatePatientAccountAssetProps>): void {
+
 		// Verify if client fill patient Identification Number box
 		if (!asset.patientIdentificationNumber) {
 			throw new Error('You must enter your identification number');
@@ -71,16 +74,13 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		if (!VALID_PATIENT_DOMAIN.includes(chunks[1])) {
 			throw new Error(`Invalid domain found "${chunks[1]}". Valid TLDs are "${VALID_PATIENT_DOMAIN.join()}"`);
 		};
-
-	
-
 		
 
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
 	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<CreatePatientAccountAssetProps>): Promise<void> {
-		//create Patient account
+	
 		const senderAddress = transaction.senderAddress;
 		const senderAccount = await stateStore.account.get<PatientModuleProps>(senderAddress);
 
@@ -104,10 +104,13 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		}
 
 		//Verify if areaCode is valid
-		/**if (!(asset.areaCode in CHAIN_STATE_POOL_ACCOUNTS)) {
+
+		/*const areaCodeIndex = poolAccounts.findIndex((t) => t.id.equals(asset.areaCode));
+		if (areaCodeIndex >= 0) {
 			throw new Error('Your area is not yet concerned, sorry !');
 		}*/
 
+		//create patient account
 		const patientAccount = createPatientAccount({
 			patientIdentificationNumber: asset.patientIdentificationNumber,
         	areaCode: asset.areaCode,
@@ -116,24 +119,17 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 			nonce: transaction.nonce,
 		});
 
-		//update sender account with unique Patient username
+		//update user account with unique username and his personal patient account
 		senderAccount.selfPatient = patientAccount;
 		senderAccount.reverseLookup = patientAccount.username;
 		await stateStore.account.set(senderAddress, senderAccount);
 		
-		//save patient
+		//save patient in database
 		const allAccounts = await getAllPatientAccounts(stateStore);
 		allAccounts.push(patientAccount);
 		await setAllPatientAccounts(stateStore, allAccounts);
 
-
-
-
-
-
 	}
-
-
 
 }
 

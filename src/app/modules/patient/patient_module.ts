@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 
 import { EMPTY_BUFFER } from '@liskhq/lisk-chain/dist-node/constants';
+
 import {
-    AccountSchema,
     AfterBlockApplyContext,
 
 
