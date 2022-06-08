@@ -36,13 +36,43 @@ describe('CreatePatientAccountAsset', () => {
 				)
 			});
 
-			it('should throw error if username has more than one domain', () => {
+			it('should throw error if username doesnt contain adh', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "33_France", username: "by.moussa"},
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "by.moussa"},
 					transaction: {senderAddress: Buffer.alloc(0)} as any,
 				});
 				expect(() => transactionAsset.validate(context)).toThrow(
 					'Invalid domain found "moussa". Valid domain is "adh"'
+				)
+			});
+
+			it('should throw error if user doesnt add his patient identification number', () => {
+				const context = testing.createValidateAssetContext({
+					asset: {patientIdentificationNumber: "", areaCode: "221_SENEGAL", username: "moussa.adh"},
+					transaction: {senderAddress: Buffer.alloc(0)} as any,
+				});
+				expect(() => transactionAsset.validate(context)).toThrow(
+					'You must enter your identification number'
+				)
+			});
+
+			it('should throw error if user doesnt add his area code', () => {
+				const context = testing.createValidateAssetContext({
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "", username: "moussa.adh"},
+					transaction: {senderAddress: Buffer.alloc(0)} as any,
+				});
+				expect(() => transactionAsset.validate(context)).toThrow(
+					'You must enter your areaCode, you can find it on https://skalleo.io'
+				)
+			});
+
+			it('should throw error if username doesnt a username', () => {
+				const context = testing.createValidateAssetContext({
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: ""},
+					transaction: {senderAddress: Buffer.alloc(0)} as any,
+				});
+				expect(() => transactionAsset.validate(context)).toThrow(
+					'You must enter your username, please use "." only behind "adh'
 				)
 			});
 

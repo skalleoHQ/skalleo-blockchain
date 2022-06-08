@@ -47,7 +47,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 			throw new Error('You must enter your identification number');
 		};
 
-		// Implement checking identity procedure (redirect the client to national database for example and verify identity)
+		// Must implement checking identity procedure (redirect the client to national database for example and verify identity)
 
 		/**
 		 * */ 
@@ -63,6 +63,10 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		/**
 		 * */
 		
+		// Verify if client fill username box
+		if (!asset.username) {
+			throw new Error('You must enter your username, please use "." only behind "adh');
+		};
 
 		// Verify if username is valid
 		const chunks = asset.username.split(/\./);
