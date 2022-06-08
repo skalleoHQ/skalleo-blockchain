@@ -1,3 +1,4 @@
+import { testing } from 'lisk-sdk';
 import { CreatePatientAccountAsset } from '../../../../../src/app/modules/patient/assets/create_patient_account_asset';
 
 describe('CreatePatientAccountAsset', () => {
@@ -21,20 +22,36 @@ describe('CreatePatientAccountAsset', () => {
 		});
 	});
 
+
+
 	describe('validate', () => {
 		describe('schema validation', () => {
-      it.todo('should throw errors for invalid schema');
-      it.todo('should be ok for valid schema');
-    });
+			it('should throw error if username has more than one domain', () => {
+				const context = testing.createValidateAssetContext({
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "33_France", username: "by.moussa.adh"},
+					transaction: {senderAddress: Buffer.alloc(0)} as any,
+				});
+				expect(() => transactionAsset.validate(context)).toThrow(
+					'You may not use "." than for the domain'
+				)
+			});
+
+
+
+			it.todo('should be ok for valid schema');
+		});
 	});
 
-	describe('apply', () => {
-    describe('valid cases', () => {
-      it.todo('should update the state store');
-    });
 
-    describe('invalid cases', () => {
-      it.todo('should throw error');
-    });
+
+	describe('apply', () => {
+		describe('valid cases', () => {
+			it.todo('should update the state store');
+		});
+		
+
+		describe('invalid cases', () => {
+			it.todo('should throw error');
+		});
 	});
 });
