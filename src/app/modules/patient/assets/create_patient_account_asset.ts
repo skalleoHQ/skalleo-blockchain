@@ -47,7 +47,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 			throw new Error('You must enter your identification number');
 		};
 
-		// Must implement checking identity procedure (redirect the client to national database for example and verify identity)
+		// Must implement checking identity procedure (redirect the client to his national database for example and verify identity)
 
 		/**
 		 * */ 
@@ -57,7 +57,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 			throw new Error('You must enter your areaCode, you can find it on https://skalleo.io');
 		};
 
-		// Implement checking areaCode procedure (redirect the client to national database for example and verify if this zone is concerned)
+		// Implement checking areaCode procedure (redirect the client to his national database for example and verify if this zone is concerned)
 		// OR verify it with apply: we can look CHAIN_STATE_POOL_ACCOUNTS if the areaCode is available
 
 		/**
