@@ -1,4 +1,4 @@
-import { StateStore } from '@liskhq/lisk-chain';
+import { StateStore } from 'lisk-sdk';
 import { testing } from 'lisk-sdk';
 import { CreatePatientAccountAsset } from '../../../../../src/app/modules/patient/assets/create_patient_account_asset';
 import { PatientModuleProps } from '../../../../../src/app/modules/patient/assets/register';
@@ -119,7 +119,7 @@ describe('CreatePatientAccountAsset', () => {
 			it('should update the state store with unique patient ID', async () => {
 				const username = "moussa.adh";
 				const allAccounts = await getAllPatientAccounts;
-				const id_username = allAccounts.findIndex((t) => t.id.equals(username));
+				const usernameIndex = allAccounts.findIndex((t) => t.id.equals(username));
 				const context = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
@@ -128,7 +128,7 @@ describe('CreatePatientAccountAsset', () => {
 
 				await transactionAsset.apply(context);
 
-				expect(stateStore.chain.set).toHaveBeenCalledWith(id_username, expect.any(Buffer));
+				expect(stateStore.chain.set).toHaveBeenCalledWith(usernameIndex, expect.any(Buffer));
 			});
 		});
 

@@ -19,18 +19,18 @@ export class PatientModule extends BaseModule {
         type: 'object',
         required: ['selfPatient', 'reverseLookup'],
         properties: {
+            reverseLookup: {
+                dataType: 'bytes',
+                fieldNumber: 1,
+            },
             selfPatient: {
                 dataType: 'bytes',
-                fieldNumber: 1, 
-            },
-            reverseLookup: {
-                dataType: 'string',
-                fieldNumber: 2,
+                fieldNumber: 2, 
             },
         },
         default: {
             selfPatient: EMPTY_BUFFER,
-            reverseLookup: "",
+            reverseLookup: EMPTY_BUFFER,
         }
     }
 
