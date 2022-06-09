@@ -118,8 +118,9 @@ describe('CreatePatientAccountAsset', () => {
 		describe('valid cases', () => {
 			it('should update the state store with unique patient ID', async () => {
 				const username = "moussa.adh";
-				const allAccounts = await getAllPatientAccounts;
-				const usernameIndex = allAccounts.findIndex((t) => t.id.equals(username));
+				const allAccounts = await getAllPatientAccounts(stateStore);
+				const accountIndex = allAccounts.findIndex((t) => t.id.equals(username));
+				const patientAccount = allAccounts[accountIndex];
 				const context = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
@@ -128,7 +129,7 @@ describe('CreatePatientAccountAsset', () => {
 
 				await transactionAsset.apply(context);
 
-				expect(stateStore.chain.set).toHaveBeenCalledWith(usernameIndex, expect.any(Buffer));
+				expect(stateStore.chain.set).toHaveBeenCalledWith(patientAccount, expect.any(Buffer));
 			});
 		});
 

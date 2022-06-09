@@ -89,6 +89,11 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		const senderAccount = await stateStore.account.get<PatientModuleProps>(senderAddress);
 
 		const patientAccounts = await getAllPatientAccounts(stateStore);
+
+		//Admit only one patient account by the way
+		if (senderAccount.selfPatient || senderAccount.reverseLookup) {
+			throw new Error('You have already a patient account !')
+		}
 	
 		//Each patientIdentificationNumber has only one account
 		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.id.equals(asset.patientIdentificationNumber));
@@ -100,11 +105,6 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		const patientUsernameIndex = patientAccounts.findIndex((t) => t.id.equals(asset.username));
 		if (patientUsernameIndex >= 0) {
 			throw new Error('This username is already reserved, please try another.')
-		}
-
-		//Admit only one patient account by the way
-		if (senderAccount.selfPatient) {
-			throw new Error('You have already a patient account !')
 		}
 
 		//Verify if areaCode is valid

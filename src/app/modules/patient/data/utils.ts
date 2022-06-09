@@ -55,7 +55,7 @@ const createPatientAccount = ({ patientIdentificationNumber, areaCode, username,
     const nonceBuffer = Buffer.alloc(8);
     nonceBuffer.writeBigInt64LE(nonce);
 
-    const seed = Buffer.concat([patientIdentificationNumber, areaCode, username, ownerAddress, nonceBuffer]);
+    const seed = Buffer.concat([ownerAddress, nonceBuffer]);
     const id = cryptography.hash(seed);
 
     return {
