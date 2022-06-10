@@ -10,7 +10,7 @@ const EMPTY_BUFFER = Buffer.alloc(0);
 
 
 const registeredPatientAccountsSchema = {
-    $id: 'lisk/patient/registeredAccounts',
+    $id: 'skalleo/patient/registeredAccounts',
     type: 'object',
     required: ['registeredPatientAccounts'],
     properties: {

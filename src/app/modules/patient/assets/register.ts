@@ -16,4 +16,13 @@ export interface RegisteredPatientAccountsSchemaProps {
 };
 
 
+export interface RegisteredPatientAccount {
+	id: 'bytes',
+	ownerAddress: 'bytes',
+	patientIdentificationNumber:'string',
+	areaCode: 'string',
+	username: 'string',
+};
+
+
 

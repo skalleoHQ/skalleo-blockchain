@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { EMPTY_BUFFER } from '@liskhq/lisk-chain/dist-node/constants';
+const { EMPTY_BUFFER } = require ('../patient/data/utils');
 
 import {
     AfterBlockApplyContext,
@@ -15,7 +15,7 @@ import { CreatePatientAccountAsset } from "./assets/create_patient_account_asset
 
 export class PatientModule extends BaseModule {
     public accountSchema = {
-        $id: 'lisk/patient/patientAccount',
+        $id: 'skalleo/patient/patientAccount',
         type: 'object',
         required: ['selfPatient', 'reverseLookup'],
         properties: {
