@@ -65,7 +65,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		
 		// Verify if client fill username box
 		if (!asset.username) {
-			throw new Error('You must enter your username, please use "." only behind "adh');
+			throw new Error('You must enter your username, please use "." only in front of "adh');
 		};
 
 		// Verify if username is valid
