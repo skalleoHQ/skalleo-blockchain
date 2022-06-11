@@ -1,27 +1,27 @@
 export interface PatientModuleProps {
-    selfPatient: 'bytes';
-    reverseLookup: 'bytes';
+    readonly selfPatient: Buffer;
+    readonly reverseLookup: Buffer;
 };
 
 
 export interface CreatePatientAccountAssetProps {
-	patientIdentificationNumber: string;
-	areaCode: string;
-	username: string;
+	readonly patientIdentificationNumber: string;
+	readonly areaCode: string;
+	readonly username: string;
 };
 
 
 export interface RegisteredPatientAccountsSchemaProps {
-	registeredPatientAccounts: []
+	readonly registeredPatientAccounts: []
 };
 
 
 export interface RegisteredPatientAccount {
-	id: 'bytes',
-	ownerAddress: 'bytes',
-	patientIdentificationNumber:'string',
-	areaCode: 'string',
-	username: 'string',
+	readonly id: Buffer,
+	readonly ownerAddress: Buffer,
+	readonly patientIdentificationNumber: string,
+	readonly areaCode: string,
+	readonly username: string,
 };
 
 

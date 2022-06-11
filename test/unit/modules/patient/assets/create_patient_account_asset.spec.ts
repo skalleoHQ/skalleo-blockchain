@@ -139,7 +139,7 @@ describe('CreatePatientAccountAsset', () => {
 
 
 		describe('invalid cases', () => {
-			it('should throw error', async() => {
+			/*it('should throw error when patient identification number is already registered', async() => {
 				const context = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
@@ -155,10 +155,31 @@ describe('CreatePatientAccountAsset', () => {
 				await transactionAsset.apply(context);
 
 				await expect(() => transactionAsset.apply(context1)).rejects.toThrow(
-					'You have already a patient account !'
+					'Your patient identification number is already registered !'
 				)
 
-			});
+			});*/
+
+			/*it('should throw error when username is already reserved', async() => {
+				const context2 = testing.createApplyAssetContext({
+					stateStore,
+					asset: {patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mous.adh"},
+					transaction: {senderAddress: account.address} as any,
+				});
+
+				const context3 = testing.createApplyAssetContext({
+					stateStore,
+					asset: {patientIdentificationNumber: "000003301012022", areaCode: "221_SENEGAL", username: "mous.adh"},
+					transaction: {senderAddress: account.address} as any,
+				});
+
+				await transactionAsset.apply(context2);
+
+				await expect(() => transactionAsset.apply(context3)).rejects.toThrow(
+					'This username is already reserved, please try another.'
+				)
+
+			});*/
 		});
 	});
 });

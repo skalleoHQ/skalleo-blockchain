@@ -91,18 +91,18 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		const patientAccounts = await getAllPatientAccounts(stateStore);
 
 		//Admit only one patient account by the way
-		if (senderAccount.selfPatient || senderAccount.reverseLookup) {
+		/*if (senderAccount.selfPatient || senderAccount.reverseLookup) {
 			throw new Error('You have already a patient account !')
-		}
+		}*/
 	
 		//Each patientIdentificationNumber has only one account
-		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.id.equals(asset.patientIdentificationNumber));
+		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.id === (asset.patientIdentificationNumber));
 		if (patientIdentificationNumberIndex >= 0) {
-			throw new Error('You have already a patient account !')
+			throw new Error('Your patient identification number is already registered !')
 		}
 
-		//Verify if domain is unique
-		const patientUsernameIndex = patientAccounts.findIndex((t) => t.id.equals(asset.username));
+		//Verify if username is unique
+		const patientUsernameIndex = patientAccounts.findIndex((t) => t.id === (asset.username));
 		if (patientUsernameIndex >= 0) {
 			throw new Error('This username is already reserved, please try another.')
 		}
