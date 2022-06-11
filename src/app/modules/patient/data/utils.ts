@@ -1,5 +1,5 @@
 import { codec, StateStore, /*cryptography*/ } from 'lisk-sdk';
-import { RegisteredPatientAccount, RegisteredPatientAccountsSchemaProps } from '../assets/register';
+import { /*RegisteredPatientAccount,*/ RegisteredPatientAccountsSchemaProps } from '../assets/register';
 
 
 const VALID_PATIENT_DOMAIN = ['adh'];
@@ -108,7 +108,7 @@ const getAllPatientAccountsAsJSON = async (dataAccess) => {
 };
 
 
-const setAllPatientAccounts = async (stateStore: StateStore, patientAccounts: RegisteredPatientAccount[]) => {
+const setAllPatientAccounts = async (stateStore: StateStore, patientAccounts) => {
     const registeredAccounts = {
         registeredPatientAccounts: patientAccounts.sort((a, b) => a.id.compare(b.id)),
     };
