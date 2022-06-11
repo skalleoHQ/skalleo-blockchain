@@ -5,7 +5,9 @@ import { PatientModuleProps } from '../../../../../src/app/modules/patient/asset
 import { PatientModule } from '../../../../../src/app/modules/patient/patient_module';
 
 
-const { getAllPatientAccounts } = require ('../../../../../src/app/modules/patient/data/utils');
+//const { getAllPatientAccounts } = require ('../../../../../src/app/modules/patient/data/utils');
+
+//const { CHAIN_STATE_PATIENT_ACCOUNTS } = require ('../../../../../src/app/modules/patient/data/utils');
 
 describe('CreatePatientAccountAsset', () => {
   let transactionAsset: CreatePatientAccountAsset;
@@ -117,10 +119,10 @@ describe('CreatePatientAccountAsset', () => {
 
 		describe('valid cases', () => {
 			it('should update the state store with unique patient ID', async () => {
-				const username = "moussa.adh";
+				/*const username = "moussa.adh";
 				const allAccounts = await getAllPatientAccounts(stateStore);
 				const accountIndex = allAccounts.findIndex((t) => t.id.equals(username));
-				const patientAccount = allAccounts[accountIndex];
+				const patientAccount = allAccounts[accountIndex];*/
 				const context = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
@@ -129,7 +131,9 @@ describe('CreatePatientAccountAsset', () => {
 
 				await transactionAsset.apply(context);
 
-				expect(stateStore.chain.set).toHaveBeenCalledWith(patientAccount, expect.any(Buffer));
+				expect(stateStore.chain.set).toHaveBeenCalledWith(
+					context.stateStore
+					);
 			});
 		});
 
