@@ -139,7 +139,26 @@ describe('CreatePatientAccountAsset', () => {
 
 
 		describe('invalid cases', () => {
-			it.todo('should throw error');
+			it('should throw error', async() => {
+				const context = testing.createApplyAssetContext({
+					stateStore,
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
+					transaction: {senderAddress: account.address} as any,
+				});
+
+				const context1 = testing.createApplyAssetContext({
+					stateStore,
+					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "mouss.adh"},
+					transaction: {senderAddress: account.address} as any,
+				});
+
+				await transactionAsset.apply(context);
+
+				await expect(() => transactionAsset.apply(context1)).rejects.toThrow(
+					'You have already a patient account !'
+				)
+
+			});
 		});
 	});
 });
