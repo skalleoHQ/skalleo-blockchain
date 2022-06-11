@@ -1,5 +1,5 @@
-import { codec, StateStore, /*cryptography*/ } from 'lisk-sdk';
-import { /*RegisteredPatientAccount,*/ RegisteredPatientAccountsSchemaProps } from '../assets/register';
+import { BaseModuleDataAccess, codec, StateStore, /*cryptography*/ } from 'lisk-sdk';
+import { RegisteredPatientAccount, RegisteredPatientAccountsSchemaProps } from '../assets/register';
 
 
 const VALID_PATIENT_DOMAIN = ['adh'];
@@ -70,7 +70,7 @@ const createPatientAccount = ({ patientIdentificationNumber, areaCode, username,
 };
 
 
-const getAllPatientAccounts = async (stateStore) => {
+const getAllPatientAccounts = async (stateStore: StateStore) => {
     const registeredAccountsBuffer = await stateStore.chain.get(
         CHAIN_STATE_PATIENT_ACCOUNTS
     );
@@ -89,7 +89,7 @@ const getAllPatientAccounts = async (stateStore) => {
 };
 
 
-const getAllPatientAccountsAsJSON = async (dataAccess) => {
+const getAllPatientAccountsAsJSON = async (dataAccess: BaseModuleDataAccess) => {
     const registeredAccountsBuffer = await dataAccess.getChainState(
         CHAIN_STATE_PATIENT_ACCOUNTS
     );
@@ -108,7 +108,7 @@ const getAllPatientAccountsAsJSON = async (dataAccess) => {
 };
 
 
-const setAllPatientAccounts = async (stateStore: StateStore, patientAccounts) => {
+const setAllPatientAccounts = async (stateStore: StateStore, patientAccounts: RegisteredPatientAccount[]) => {
     const registeredAccounts = {
         registeredPatientAccounts: patientAccounts.sort((a, b) => a.id.compare(b.id)),
     };
