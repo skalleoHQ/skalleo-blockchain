@@ -122,7 +122,7 @@ describe('CreatePatientAccountAsset', () => {
 				/*const username = "moussa.adh";
 				const allAccounts = await getAllPatientAccounts(stateStore);
 				const accountIndex = allAccounts.findIndex((t) => t.id.equals(username));
-				const patientAccount = allAccounts[accountIndex];
+				const patientAccount = allAccounts[accountIndex];*/
 				const context = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
@@ -131,9 +131,9 @@ describe('CreatePatientAccountAsset', () => {
 
 				await transactionAsset.apply(context);
 
-				expect(stateStore.chain.set).toHaveBeenCalledWith(
-					context.stateStore
-					);*/
+				expect(stateStore.chain.networkIdentifier).toEqual(context.stateStore.chain.networkIdentifier);
+				expect(stateStore.chain.set).toBe(context.stateStore.chain.set);
+				expect(stateStore.chain.set).toHaveBeenCalledWith("patient: registeredPatientAccounts", expect.any(Buffer))
 			});
 		});
 
