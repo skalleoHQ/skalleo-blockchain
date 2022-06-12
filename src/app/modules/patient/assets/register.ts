@@ -1,6 +1,6 @@
 export interface PatientModuleProps {
-    readonly selfPatient: Buffer;
-    readonly reverseLookup: Buffer;
+    selfPatient: Buffer;
+    reverseLookup: Buffer;
 };
 
 

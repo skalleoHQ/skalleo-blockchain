@@ -91,9 +91,9 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		const patientAccounts = await getAllPatientAccounts(stateStore);
 
 		//Admit only one patient account by the way
-		/*if (senderAccount.selfPatient || senderAccount.reverseLookup) {
+		if (senderAccount.selfPatient || senderAccount.reverseLookup) {
 			throw new Error('You have already a patient account !')
-		}*/
+		}
 	
 		//Each patientIdentificationNumber has only one account
 		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.id === (asset.patientIdentificationNumber));
