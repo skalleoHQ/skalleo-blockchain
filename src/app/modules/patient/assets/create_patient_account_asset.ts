@@ -96,13 +96,13 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 		}
 	
 		//Each patientIdentificationNumber has only one account
-		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.id === (asset.patientIdentificationNumber));
+		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.patientIdentificationNumber === (asset.patientIdentificationNumber));
 		if (patientIdentificationNumberIndex >= 0) {
-			throw new Error('Your patient identification number is already registered !')
+			throw new Error('This patient identification number is already registered !')
 		}
 
 		//Verify if username is unique
-		const patientUsernameIndex = patientAccounts.findIndex((t) => t.id === (asset.username));
+		const patientUsernameIndex = patientAccounts.findIndex((t) => t.username === (asset.username));
 		if (patientUsernameIndex >= 0) {
 			throw new Error('This username is already reserved, please try another.')
 		}

@@ -105,14 +105,23 @@ describe('CreatePatientAccountAsset', () => {
 	describe('apply', () => {
 		let stateStore: StateStore;
 		let account: any;
-		let account1: any
+		let account1: any;
+		let account2: any;
+		let account3: any;
+		let account4: any;
+		let account5: any
+
 
 		beforeEach(() => {
 			account = testing.fixtures.createDefaultAccount<PatientModuleProps>([PatientModule]);
 			account1 = testing.fixtures.createDefaultAccount<PatientModuleProps>([PatientModule]);
+			account2 = testing.fixtures.createDefaultAccount<PatientModuleProps>([PatientModule]);
+			account3 = testing.fixtures.createDefaultAccount<PatientModuleProps>([PatientModule]);
+			account4 = testing.fixtures.createDefaultAccount<PatientModuleProps>([PatientModule]);
+			account5 = testing.fixtures.createDefaultAccount<PatientModuleProps>([PatientModule]);
 
 			stateStore = new testing.mocks.StateStoreMock({
-				accounts: [account, account1],
+				accounts: [account, account1, account2, account3, account4, account5],
 			});
 
 			jest.spyOn(stateStore.chain, 'get');
@@ -162,26 +171,47 @@ describe('CreatePatientAccountAsset', () => {
 
 			});
 
-			/*it('should throw error if patient identification number is already registered', async() => {
+			it('should throw error if patient identification number is already registered', async() => {
 				const context2 = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mous.adh"},
-					transaction: {senderAddress: account.address} as any,
+					transaction: {senderAddress: account2.address} as any,
 				});
 
 				const context3 = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mouss.adh"},
-					transaction: {senderAddress: account1.address} as any,
+					transaction: {senderAddress: account3.address} as any,
 				});
 
 				await transactionAsset.apply(context2);
 
 				await expect(() => transactionAsset.apply(context3)).rejects.toThrow(
-					'Your patient identification number is already registered !'
+					'This patient identification number is already registered !'
 				)
 
-			});*/
+			});
+
+			it('should throw error if username is already reserved', async() => {
+				const context4 = testing.createApplyAssetContext({
+					stateStore,
+					asset: {patientIdentificationNumber: "0003301012022", areaCode: "221_SENEGAL", username: "mou.adh"},
+					transaction: {senderAddress: account4.address} as any,
+				});
+
+				const context5 = testing.createApplyAssetContext({
+					stateStore,
+					asset: {patientIdentificationNumber: "00003301012022", areaCode: "33_France", username: "mou.adh"},
+					transaction: {senderAddress: account5.address} as any,
+				});
+
+				await transactionAsset.apply(context4);
+
+				await expect(() => transactionAsset.apply(context5)).rejects.toThrow(
+					'This username is already reserved, please try another.'
+				)
+
+			});
 		});
 	});
 });
