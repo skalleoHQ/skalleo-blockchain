@@ -1,4 +1,4 @@
-import { BaseModuleDataAccess, codec, StateStore, /*cryptography*/ } from 'lisk-sdk';
+import { BaseModuleDataAccess, codec, StateStore, cryptography } from 'lisk-sdk';
 import { RegisteredPatientAccount, RegisteredPatientAccountsSchemaProps } from '../assets/register';
 
 
@@ -52,12 +52,11 @@ const CHAIN_STATE_PATIENT_ACCOUNTS = 'patient: registeredPatientAccounts';
 
 
 const createPatientAccount = ({ patientIdentificationNumber, areaCode, username, ownerAddress, nonce }) => {
-    /*const nonceBuffer = Buffer.alloc(8);
-    nonceBuffer.writeBigInt64LE(nonce);
+    const nonceBuffer = Buffer.alloc(8);
+    nonceBuffer.writeBigInt64LE(nonce || BigInt(0))
 
     const seed = Buffer.concat([ownerAddress, nonceBuffer]);
-    const id = cryptography.hash(seed);*/
-    const id = nonce;
+    const id = cryptography.hash(seed);
 
     return {
         id,

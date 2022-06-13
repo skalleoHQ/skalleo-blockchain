@@ -109,7 +109,7 @@ export class CreatePatientAccountAsset extends BaseAsset<CreatePatientAccountAss
 
 		//Verify if areaCode is valid
 
-		/*const areaCodeIndex = poolAccounts.findIndex((t) => t.id.equals(asset.areaCode));
+		/*const areaCodeIndex = poolAccounts.findIndex((t) => t.areaCode === (asset.areaCode));
 		if (areaCodeIndex >= 0) {
 			throw new Error('Your area is not yet concerned, sorry !');
 		}*/

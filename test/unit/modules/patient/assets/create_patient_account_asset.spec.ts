@@ -130,10 +130,6 @@ describe('CreatePatientAccountAsset', () => {
 
 		describe('valid cases', () => {
 			it('should update the state store with patient account', async () => {
-				/*const username = "moussa.adh";
-				const allAccounts = await getAllPatientAccounts(stateStore);
-				const accountIndex = allAccounts.findIndex((t) => t.id.equals(username));
-				const patientAccount = allAccounts[accountIndex];*/
 				const context = testing.createApplyAssetContext({
 					stateStore,
 					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
