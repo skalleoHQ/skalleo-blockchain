@@ -12,6 +12,7 @@ import {
     BeforeBlockApplyContext, TransactionApplyContext
 } from 'lisk-sdk';
 import { CreatePatientAccountAsset } from "./assets/create_patient_account_asset";
+import { PayForCareAsset } from "./assets/pay_for_care_asset";
 
 export class PatientModule extends BaseModule {
     public accountSchema = {
@@ -56,7 +57,7 @@ export class PatientModule extends BaseModule {
 		// },
     };
     public name = 'patient';
-    public transactionAssets = [new CreatePatientAccountAsset()];
+    public transactionAssets = [new CreatePatientAccountAsset(), new PayForCareAsset(), new PayForCareAsset()];
     public events = [
         // Example below
         // 'patient:newBlock',
