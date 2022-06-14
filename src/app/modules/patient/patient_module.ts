@@ -57,7 +57,7 @@ export class PatientModule extends BaseModule {
 		// },
     };
     public name = 'patient';
-    public transactionAssets = [new CreatePatientAccountAsset(), new PayForCareAsset(), new PayForCareAsset()];
+    public transactionAssets = [new CreatePatientAccountAsset(), new PayForCareAsset()];
     public events = [
         // Example below
         // 'patient:newBlock',
