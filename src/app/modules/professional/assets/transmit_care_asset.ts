@@ -1,8 +1,10 @@
+import assert = require('assert');
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
-import { TransmitCareAssetProps } from './register';
+import { ProfessionalModuleProps, TransmitCareAssetProps } from './register';
 
 const {
 	VALID_PATIENT_DOMAIN,
+	getAllPatientAccounts,
 
 } = require ('../../patient/assets/register')
 
@@ -71,8 +73,39 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-  	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<{}>): Promise<void> {
-		throw new Error('Asset "transmitCare" apply hook is not implemented.');
+  	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<TransmitCareAssetProps>): Promise<void> {
+		const senderAddress = transaction.senderAddress;
+		const senderAccount = stateStore.account.get<ProfessionalModuleProps>(senderAddress);
+		
+		const patientAccounts = await getAllPatientAccounts(stateStore);
+
+		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.patientIdentificationNumber === asset.patientIdentificationNumber);
+		if (patientIdentificationNumberIndex < 0) {
+			throw new Error('Patient not found !');	
+		}
+
+		const patientReverseLookupIndex = patientAccounts.findIndex((t) => t.username === asset.reverseLookup);
+		if (patientReverseLookupIndex < 0) {
+			throw new Error('Patient not found !');
+		}
+
+		/*const patientAreaCodeIndex = patientAccounts.findIndex((t) => t.areaCode === asset.areaCode);
+		if (patientAreaCodeIndex < 0) {
+			throw new Error('Patient not found !');
+		}*/
+		//assert(patientReverseLookupIndex === patientAreaCodeIndex); impossible because areaCode not unique
+
+		if(patientIdentificationNumberIndex !== patientReverseLookupIndex) {
+			throw new Error('Patient not found !');
+		}
+
+		//const patientAccount = patientAccounts[patientIdentificationNumberIndex];
+		
+		//Must implement verification procedure for medical record 
+
+
+
+
 	}
 
 
