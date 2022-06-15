@@ -22,8 +22,12 @@ export interface RegisteredProfessionalAccount {
     readonly professionalIdentificationNumber: string;
     readonly areaCode: string;
     readonly username: string;
-}
+};
 
-
-
+export interface TransmitCareAssetProps {
+    readonly patientIdentificationNumber: string;
+    readonly reverseLookup: string;
+    readonly areaCode: string;
+    readonly medicalRecord: string;
+};
 
