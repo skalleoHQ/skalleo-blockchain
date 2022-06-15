@@ -9,7 +9,12 @@ import {
 
     BeforeBlockApplyContext, TransactionApplyContext
 } from 'lisk-sdk';
+
 import { CreateProfessionalAccountAsset } from "./assets/create_professional_account_asset";
+
+const { EMPTY_BUFFER, 
+
+} = require ('../professional/data/utils');
 
 
 
@@ -27,7 +32,7 @@ export class ProfessionalModule extends BaseModule {
                 dataType: 'bytes',
                 fieldNumber: 2,
             },
-        }
+        },
         default: {
             selfProfessional: EMPTY_BUFFER,
             reverseLookup: EMPTY_BUFFER,

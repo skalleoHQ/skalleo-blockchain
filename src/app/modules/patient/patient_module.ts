@@ -11,6 +11,7 @@ import {
 
     BeforeBlockApplyContext, TransactionApplyContext
 } from 'lisk-sdk';
+
 import { CreatePatientAccountAsset } from "./assets/create_patient_account_asset";
 
 export class PatientModule extends BaseModule {
