@@ -127,8 +127,8 @@ const setAllPatientAccounts = async (stateStore: StateStore, patientAccounts: Re
 module.exports = {
     VALID_PATIENT_DOMAIN,
     EMPTY_BUFFER,
-    registeredPatientAccountsSchema,
     CHAIN_STATE_PATIENT_ACCOUNTS,
+    registeredPatientAccountsSchema,
     createPatientAccount,
     getAllPatientAccounts,
     setAllPatientAccounts,
