@@ -1,4 +1,3 @@
-import assert = require('assert');
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
 import { ProfessionalModuleProps, TransmitCareAssetProps } from './register';
 
@@ -6,7 +5,13 @@ const {
 	VALID_PATIENT_DOMAIN,
 	getAllPatientAccounts,
 
-} = require ('../../patient/assets/register')
+} = require ('../../patient/assets/register');
+
+
+const {
+	getAllProfessionalAccounts,
+
+} = require ('./register');
 
 
 export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
@@ -99,7 +104,15 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('Patient not found !');
 		}
 
-		//const patientAccount = patientAccounts[patientIdentificationNumberIndex];
+		const professionalAccounts = await getAllProfessionalAccounts(stateStore);
+		const addressIndex = professionalAccounts.findIndex((t) => t.ownerAddress === transaction.senderAddress);
+		
+		const professionalAccount = professionalAccounts[addressIndex];
+		const patientAccount = patientAccounts[patientIdentificationNumberIndex]; 
+
+		if (professionalAccount.ownerAddress === patientAccount.ownerAddress) {
+			throw new Error('Transaction error !');
+		}
 		
 		//Must implement verification procedure for medical record 
 
