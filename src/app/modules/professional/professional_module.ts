@@ -9,8 +9,9 @@ import {
 
     BeforeBlockApplyContext, TransactionApplyContext
 } from 'lisk-sdk';
-
 import { CreateProfessionalAccountAsset } from "./assets/create_professional_account_asset";
+import { TransmitCareAsset } from "./assets/transmit_care_asset";
+
 
 const { EMPTY_BUFFER, 
 
@@ -60,7 +61,7 @@ export class ProfessionalModule extends BaseModule {
 		// },
     };
     public name = 'professional';
-    public transactionAssets = [new CreateProfessionalAccountAsset()];
+    public transactionAssets = [new CreateProfessionalAccountAsset(), new TransmitCareAsset()];
     public events = [
         // Example below
         // 'professional:newBlock',
