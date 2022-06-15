@@ -14,8 +14,21 @@ export class PayForCareAsset extends BaseAsset {
 		$id: 'patient/payForCare-asset',
 			title: 'PayForCareAsset transaction asset for patient module',
 			type: 'object',
-			required: ['professionalReverseLookup'],
-			properties: {},
+			required: ['patientReverseLookup', 'professionalReverseLookup', 'medicalRecordId'],
+			properties: {
+				patientReverseLookup: {
+					dataType: 'bytes',
+					fieldNumber: 1,
+				},
+				professionalReverseLookup: {
+					dataType: 'bytes',
+					fieldNumber: 2,
+				},
+				medicalRecordId: {
+					dataType: 'bytes',
+					fieldNumber: 3,
+				},
+			},
 	};
 
 
