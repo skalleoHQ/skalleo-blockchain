@@ -68,12 +68,12 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('You must enter areaCode of your patient');
 		}
 
-		//This medicalRecord will be used only to update patient's medical record in his national database
+		//This careSpecifications will be used only to update patient's medical record in his national database
 		if (!asset.careSpecifications) {
 			throw new Error('Please update the cares specifications of your patient !')
 		}
 
-		//Must implement procedure in order to send medicalRecord to national database
+		//Must implement procedure in order to send specifications to national database
 
 	}
 
