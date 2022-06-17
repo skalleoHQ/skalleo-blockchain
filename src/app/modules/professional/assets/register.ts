@@ -28,6 +28,6 @@ export interface TransmitCareAssetProps {
     readonly patientIdentificationNumber: string;
     readonly reverseLookup: string;
     readonly areaCode: string;
-    readonly medicalRecord: string;
+    readonly careSpecifications: string;
 };
 

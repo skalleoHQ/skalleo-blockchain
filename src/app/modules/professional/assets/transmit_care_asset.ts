@@ -23,7 +23,7 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
     $id: 'professional/transmitCare-asset',
 		title: 'TransmitCareAsset transaction asset for professional module',
 		type: 'object',
-		required: ['patientIdentificationNumber', 'reverseLookup', 'areaCode', 'medicalRecord'],
+		required: ['patientIdentificationNumber', 'reverseLookup', 'areaCode', 'careSpecifications'],
 		properties: {
 			patientIdentificationNumber: {
 				dataType: 'string',
@@ -37,7 +37,7 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 				dataType: 'string',
 				fieldNumber: 3
 			},
-			medicalRecord: {
+			careSpecifications: {
 				dataType: 'string',
 				fieldNumber: 4,
 			},
@@ -69,8 +69,8 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 		}
 
 		//This medicalRecord will be used only to update patient's medical record in his national database
-		if (!asset.medicalRecord) {
-			throw new Error('Please update medicalRecord of your patient !')
+		if (!asset.careSpecifications) {
+			throw new Error('Please update the cares specifications of your patient !')
 		}
 
 		//Must implement procedure in order to send medicalRecord to national database
@@ -114,7 +114,7 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('Transaction error !');
 		}
 		
-		//Must implement verification procedure for medical record 
+		//Must implement verification procedure for cares specifications 
 
 
 
