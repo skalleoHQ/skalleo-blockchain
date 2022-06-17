@@ -94,10 +94,31 @@ const getPatientHistory = async (db, dbKey) => {
 const savePatientHistory = async (db, decodedBlock, registeredModules, channel) => {
     decodedBlock.payload.map(async trx => {
         const module = registeredModules.find(m => m.id === trx.moduleID);
-        if (module.name === 'patient') {
-            let dbKey, savedHistory, base32Address, patientHistory, encodedPatientHistory;
+        if (module.name === 'patient' || module.name === 'professional') {
+            let dbKey, savedHistory, base32Address, patientHistory, encodedPatientHistory, careSpecifications;
             if (trx.assetID === TRANSMITCARE_ASSET_ID) {
+                /*******************Start Added */
+
+                const transmitCareAsset = trx.asset;
+                const patientIdentificationNumber = transmitCareAsset.patientIdentificationNumber;
+                const patientUsername = transmitCareAsset.username;
                 channel.invoke('patient:getAllPatientAccounts').then(async (val) => {
+                    for(let i = 0; i < val.length; i++){
+                        if (val[i].patientIdentificationNumber === patientIdentificationNumber && val[i].username === patientUsername) {
+                            dbKey = 'patient:${val[i].id}';
+                            savedHistory = await getPatientHistory(db, dbKey);
+                            if (savedHistory && savedHistory.length < 1) {
+                                careSpecifications = transmitCareAsset.careSpecifications;
+                                patientHistory = [Buffer.from(careSpecifications, 'binary'), ...savedHistory];
+                                encodedPatientHistory = codec.encode(encodedPatientHistorySchema, { patientHistory });
+                                await db.put(dbKey, encodedPatientHistory);
+                            }
+                        }
+                    }
+                })
+                
+                /*******************End Added */
+                /*channel.invoke('patient:getAllPatientAccounts').then(async (val) => {
                     for (let i = 0; i < val.length; i++) {
                         const senderAddress = cryptography.getAddressFromPublicKey(Buffer.from(trx.senderPublicKey, 'hex'));
                         if (val[i].ownerAddress === senderAddress.toString('hex')) {
@@ -105,14 +126,14 @@ const savePatientHistory = async (db, decodedBlock, registeredModules, channel) 
                             savedHistory = await getPatientHistory(db, dbKey);
                             if (savedHistory && savedHistory.length < 1) {
                                 base32Address = cryptography.getBase32AddressFromPublicKey(Buffer.from(trx.senderPublicKey, 'hex'), 'lsk');
-                                patientHistory = [Buffer.from(base32Address, 'binary') ,...savedHistory];
+                                patientHistory = [Buffer.from(base32Address, 'binary'), ...savedHistory];
                                 encodedPatientHistory = codec.encode(encodedPatientHistorySchema, { patientHistory });
                                 await db.put(dbKey, encodedPatientHistory);
                             }
 
                         }
                     }
-                })
+                })*/
             }
         }
     });
