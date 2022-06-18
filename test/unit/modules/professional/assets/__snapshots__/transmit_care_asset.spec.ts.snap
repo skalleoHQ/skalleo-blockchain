@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TransmitCareAsset constructor should have valid schema 1`] = `
+Object {
+  "$id": "professional/transmitCare-asset",
+  "properties": Object {
+    "areaCode": Object {
+      "dataType": "string",
+      "fieldNumber": 3,
+    },
+    "careSpecifications": Object {
+      "dataType": "string",
+      "fieldNumber": 4,
+    },
+    "patientIdentificationNumber": Object {
+      "dataType": "string",
+      "fieldNumber": 1,
+    },
+    "reverseLookup": Object {
+      "dataType": "string",
+      "fieldNumber": 2,
+    },
+  },
+  "required": Array [
+    "patientIdentificationNumber",
+    "reverseLookup",
+    "areaCode",
+    "careSpecifications",
+  ],
+  "title": "TransmitCareAsset transaction asset for professional module",
+  "type": "object",
+}
+`;

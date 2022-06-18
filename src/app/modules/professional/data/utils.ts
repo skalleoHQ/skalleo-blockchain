@@ -50,7 +50,7 @@ const registeredProfessionalAccountsSchema = {
 
 const createProfessionalAccount = ({ professionalIdentificationNumber, areaCode, username, ownerAddress, nonce }) => {
     const nonceBuffer = Buffer.alloc(8);
-    nonceBuffer.writeBigInt64LE(nonce | BigInt(0));
+    nonceBuffer.writeBigInt64LE(nonce || BigInt(0));
 
     const seed = Buffer.concat([nonceBuffer, ownerAddress]);
     const id = cryptography.hash(seed);

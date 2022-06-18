@@ -1,3 +1,4 @@
+/*
 const fs_extra = require("fs-extra");
 const os = require("os");
 const path = require("path");
@@ -97,7 +98,7 @@ const savePatientHistory = async (db, decodedBlock, registeredModules, channel) 
         if (module.name === 'patient' || module.name === 'professional') {
             let dbKey, savedHistory, base32Address, patientHistory, encodedPatientHistory, careSpecifications;
             if (trx.assetID === TRANSMITCARE_ASSET_ID) {
-                /*******************Start Added */
+                //Start Added 
 
                 const transmitCareAsset = trx.asset;
                 const patientIdentificationNumber = transmitCareAsset.patientIdentificationNumber;
@@ -117,7 +118,7 @@ const savePatientHistory = async (db, decodedBlock, registeredModules, channel) 
                     }
                 })
                 
-                /*******************End Added */
+                //End Added 
                 /*channel.invoke('patient:getAllPatientAccounts').then(async (val) => {
                     for (let i = 0; i < val.length; i++) {
                         const senderAddress = cryptography.getAddressFromPublicKey(Buffer.from(trx.senderPublicKey, 'hex'));
@@ -133,7 +134,7 @@ const savePatientHistory = async (db, decodedBlock, registeredModules, channel) 
 
                         }
                     }
-                })*/
+                //})
             }
         }
     });
@@ -184,7 +185,7 @@ module.exports = {
     getPatientHistory,
   }
 
-
+*/
 
 
 

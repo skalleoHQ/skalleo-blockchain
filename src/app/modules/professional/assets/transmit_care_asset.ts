@@ -1,5 +1,5 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
-import { ProfessionalModuleProps, TransmitCareAssetProps } from './register';
+import { /*ProfessionalModuleProps,*/ TransmitCareAssetProps } from './register';
 
 const {
 	VALID_PATIENT_DOMAIN,
@@ -73,15 +73,16 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('Please update the cares specifications of your patient !')
 		}
 
-		//Must implement procedure in order to send specifications to national database
+		//Must implement procedure in order to send specifications to national database & verify if careSpecs respect skeleton
 
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
   	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<TransmitCareAssetProps>): Promise<void> {
-		const senderAddress = transaction.senderAddress;
-		const senderAccount = stateStore.account.get<ProfessionalModuleProps>(senderAddress);
+		//const senderAddress = transaction.senderAddress;
+		//const senderAccount = stateStore.account.get<ProfessionalModuleProps>(senderAddress);
 		
+		//Verify if patient exists
 		const patientAccounts = await getAllPatientAccounts(stateStore);
 
 		const patientIdentificationNumberIndex = patientAccounts.findIndex((t) => t.patientIdentificationNumber === asset.patientIdentificationNumber);
@@ -114,7 +115,8 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('Transaction error !');
 		}
 		
-		//Must implement verification procedure for cares specifications 
+		//Must implement payment procedure
+
 
 
 

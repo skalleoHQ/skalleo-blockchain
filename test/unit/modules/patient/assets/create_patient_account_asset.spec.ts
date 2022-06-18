@@ -36,8 +36,8 @@ describe('CreatePatientAccountAsset', () => {
 		describe('schema validation', () => {
 			it('should throw error if username has more than one domain', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "by.moussa.adh"},
-					transaction: {senderAddress: Buffer.alloc(0)} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "by.moussa.adh" },
+					transaction: { senderAddress: Buffer.alloc(0) } as any,
 				});
 
 				expect(() => transactionAsset.validate(context)).toThrow(
@@ -47,8 +47,8 @@ describe('CreatePatientAccountAsset', () => {
 
 			it('should throw error if username doesnt contain adh', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "by.moussa"},
-					transaction: {senderAddress: Buffer.alloc(0)} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "by.moussa" },
+					transaction: { senderAddress: Buffer.alloc(0) } as any,
 				});
 
 				expect(() => transactionAsset.validate(context)).toThrow(
@@ -58,8 +58,8 @@ describe('CreatePatientAccountAsset', () => {
 
 			it('should throw error if user doesnt add his patient identification number', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "", areaCode: "33_FRANCE", username: "moussa.adh"},
-					transaction: {senderAddress: Buffer.alloc(0)} as any,
+					asset: { patientIdentificationNumber: "", areaCode: "33_FRANCE", username: "moussa.adh" },
+					transaction: { senderAddress: Buffer.alloc(0) } as any,
 				});
 
 				expect(() => transactionAsset.validate(context)).toThrow(
@@ -69,8 +69,8 @@ describe('CreatePatientAccountAsset', () => {
 
 			it('should throw error if user doesnt add his area code', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "", username: "moussa.adh"},
-					transaction: {senderAddress: Buffer.alloc(0)} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "", username: "moussa.adh" },
+					transaction: { senderAddress: Buffer.alloc(0) } as any,
 				});
 
 				expect(() => transactionAsset.validate(context)).toThrow(
@@ -80,9 +80,10 @@ describe('CreatePatientAccountAsset', () => {
 
 			it('should throw error if username doesnt a username', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: ""},
-					transaction: {senderAddress: Buffer.alloc(0)} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "" },
+					transaction: { senderAddress: Buffer.alloc(0) } as any,
 				});
+
 				expect(() => transactionAsset.validate(context)).toThrow(
 					'You must enter your username, please use "." only in front of "adh'
 				)
@@ -90,8 +91,8 @@ describe('CreatePatientAccountAsset', () => {
 
 			it('should be ok for valid schema', () => {
 				const context = testing.createValidateAssetContext({
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
-					transaction: {senderAddress: Buffer.alloc(0)} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh" },
+					transaction: { senderAddress: Buffer.alloc(0) } as any,
 				});
 
 				expect(() => transactionAsset.validate(context)).not.toThrow();
@@ -132,15 +133,15 @@ describe('CreatePatientAccountAsset', () => {
 			it('should update the state store with patient account', async () => {
 				const context = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
-					transaction: {senderAddress: account.address} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh" },
+					transaction: { senderAddress: account.address } as any,
 				});
 
 				await transactionAsset.apply(context);
 
 				expect(stateStore.chain.networkIdentifier).toEqual(context.stateStore.chain.networkIdentifier);
 				expect(stateStore.chain.set).toBe(context.stateStore.chain.set);
-				expect(stateStore.chain.set).toHaveBeenCalledWith("patient: registeredPatientAccounts", expect.any(Buffer))
+				expect(stateStore.chain.set).toHaveBeenCalledWith("patient: registeredPatientAccounts", expect.any(Buffer));
 			});
 		});
 
@@ -149,14 +150,14 @@ describe('CreatePatientAccountAsset', () => {
 			it('should throw error if patient is already registered', async() => {
 				const context = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh"},
-					transaction: {senderAddress: account.address} as any,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh" },
+					transaction: { senderAddress: account.address } as any,
 				});
 
 				const context1 = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "03301012022", areaCode: "221_SENEGAL", username: "m.adh"},
-					transaction: {senderAddress: account.address} as any,
+					asset: { patientIdentificationNumber: "03301012022", areaCode: "221_SENEGAL", username: "m.adh" },
+					transaction: { senderAddress: account.address } as any,
 				});
 
 				await transactionAsset.apply(context);
@@ -170,14 +171,14 @@ describe('CreatePatientAccountAsset', () => {
 			it('should throw error if patient identification number is already registered', async() => {
 				const context2 = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mous.adh"},
-					transaction: {senderAddress: account2.address} as any,
+					asset: { patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mous.adh" },
+					transaction: { senderAddress: account2.address } as any,
 				});
 
 				const context3 = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mouss.adh"},
-					transaction: {senderAddress: account3.address} as any,
+					asset: { patientIdentificationNumber: "003301012022", areaCode: "221_SENEGAL", username: "mouss.adh" },
+					transaction: { senderAddress: account3.address } as any,
 				});
 
 				await transactionAsset.apply(context2);
@@ -191,14 +192,14 @@ describe('CreatePatientAccountAsset', () => {
 			it('should throw error if username is already reserved', async() => {
 				const context4 = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "0003301012022", areaCode: "221_SENEGAL", username: "mou.adh"},
-					transaction: {senderAddress: account4.address} as any,
+					asset: { patientIdentificationNumber: "0003301012022", areaCode: "221_SENEGAL", username: "mou.adh" },
+					transaction: { senderAddress: account4.address } as any,
 				});
 
 				const context5 = testing.createApplyAssetContext({
 					stateStore,
-					asset: {patientIdentificationNumber: "00003301012022", areaCode: "33_France", username: "mou.adh"},
-					transaction: {senderAddress: account5.address} as any,
+					asset: { patientIdentificationNumber: "00003301012022", areaCode: "33_France", username: "mou.adh" },
+					transaction: { senderAddress: account5.address } as any,
 				});
 
 				await transactionAsset.apply(context4);
