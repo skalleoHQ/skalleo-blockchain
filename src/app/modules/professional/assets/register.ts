@@ -31,3 +31,17 @@ export interface TransmitCareAssetProps {
     readonly careSpecifications: string;
 };
 
+
+export interface RecordedCareSchemaProps {
+    readonly recordedCare: [];
+};
+
+export interface ARecordedCare {
+    readonly id: Buffer,
+    readonly senderAddress: Buffer,
+    readonly patientIdentificationNumber: string,
+    readonly reverseLookup: string,
+    readonly areaCode: string,
+    readonly careSpecifications: string
+}
+

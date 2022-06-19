@@ -1,4 +1,4 @@
-import { StateStore } from "@liskhq/lisk-chain";
+import { StateStore } from "lisk-sdk";
 import { BaseModuleDataAccess, codec, cryptography } from "lisk-sdk";
 import { RegisteredProfessionalAccount, RegisteredProfessionalAccountsSchemaProps } from "../assets/register";
 
