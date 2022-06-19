@@ -12,7 +12,7 @@ export interface CreatePatientAccountAssetProps {
 
 
 export interface RegisteredPatientAccountsSchemaProps {
-	readonly registeredPatientAccounts: []
+	readonly registeredPatientAccounts: RegisteredPatientAccount[]
 };
 
 

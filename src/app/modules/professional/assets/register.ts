@@ -12,7 +12,7 @@ export interface CreateProfessionalAccountAssetProps {
 
 
 export interface RegisteredProfessionalAccountsSchemaProps {
-    readonly registeredProfessionalAccounts: [];
+    readonly registeredProfessionalAccounts: RegisteredProfessionalAccount[];
 };
 
 
@@ -33,7 +33,7 @@ export interface TransmitCareAssetProps {
 
 
 export interface RecordedCareSchemaProps {
-    readonly recordedCare: [];
+    readonly recordedCare: ARecordedCare[];
 };
 
 export interface ARecordedCare {
