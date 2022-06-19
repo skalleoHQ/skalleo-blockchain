@@ -3,7 +3,7 @@ import { ARecordedCare, RecordedCareSchemaProps } from "../assets/register";
 
 const EMPTY_BUFFER = Buffer.alloc(0);
 
-const CHAIN_STATE_CARE_TRANSMITTED = 'professional: recordedCare';
+const CHAIN_STATE_CARE = 'professional: recordedCare';
 
 const recordedCareSchema = {
     $id: 'skalleo/professional/recordedCare',
@@ -68,7 +68,7 @@ const recordCare = ({ patientIdentificationNumber, reverseLookup, areaCode, care
 
 const getAllRecordedCare = async (stateStore: StateStore) => {
     const recordedCareBuffer = await stateStore.chain.get(
-        CHAIN_STATE_CARE_TRANSMITTED
+        CHAIN_STATE_CARE
     );
 
     if (!recordedCareBuffer) {
@@ -87,7 +87,7 @@ const getAllRecordedCare = async (stateStore: StateStore) => {
 
 const getAllRecordedCareAsJSON = async (dataAccess: BaseModuleDataAccess) => {
     const recordedCareBuffer = await dataAccess.getChainState(
-        CHAIN_STATE_CARE_TRANSMITTED
+        CHAIN_STATE_CARE
     );
 
     if (!recordedCareBuffer) {
@@ -109,7 +109,7 @@ const setAllRecordedCare = async (stateStore: StateStore, transmittedRecordedCar
     };
 
     await stateStore.chain.set(
-        CHAIN_STATE_CARE_TRANSMITTED,
+        CHAIN_STATE_CARE,
         codec.encode(
             recordedCareSchema,
             transmittedCare
@@ -125,7 +125,7 @@ const setAllRecordedCare = async (stateStore: StateStore, transmittedRecordedCar
 module.exports = {
     recordedCareSchema,
     EMPTY_BUFFER,
-    CHAIN_STATE_CARE_TRANSMITTED,
+    CHAIN_STATE_CARE,
     recordCare,
     getAllRecordedCare,
     getAllRecordedCareAsJSON,
