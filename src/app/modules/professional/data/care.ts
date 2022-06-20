@@ -6,9 +6,9 @@ const EMPTY_BUFFER = Buffer.alloc(0);
 const CHAIN_STATE_CARE = 'professional: recordedCare';
 
 const recordedCareSchema = {
-    $id: 'skalleo/professional/recordedCare',
+    $id: 'skalleo/professional/transmittedCare',
     type: 'object',
-    required: ['recordedTransmittedCare'],
+    required: ['recordedCare'],
     properties: {
         recordedCare: {
             type: 'array',
@@ -67,17 +67,17 @@ const recordCare = ({ patientIdentificationNumber, reverseLookup, areaCode, care
 
 
 const getAllRecordedCare = async (stateStore: StateStore) => {
-    const recordedCareBuffer = await stateStore.chain.get(
+    const transmittedCareBuffer = await stateStore.chain.get(
         CHAIN_STATE_CARE
     );
 
-    if (!recordedCareBuffer) {
+    if (!transmittedCareBuffer) {
         return [];
     };
 
     const transmittedCare = codec.decode<RecordedCareSchemaProps>(
         recordedCareSchema,
-        recordedCareBuffer
+        transmittedCareBuffer
     );
 
     return transmittedCare.recordedCare
@@ -86,26 +86,26 @@ const getAllRecordedCare = async (stateStore: StateStore) => {
 
 
 const getAllRecordedCareAsJSON = async (dataAccess: BaseModuleDataAccess) => {
-    const recordedCareBuffer = await dataAccess.getChainState(
+    const transmittedCareBuffer = await dataAccess.getChainState(
         CHAIN_STATE_CARE
     );
 
-    if (!recordedCareBuffer) {
+    if (!transmittedCareBuffer) {
         return [];
     };
 
     const transmittedCare = codec.decode<RecordedCareSchemaProps>(
         recordedCareSchema,
-        recordedCareBuffer
+        transmittedCareBuffer
     );
 
     return codec.toJSON<RecordedCareSchemaProps>(recordedCareSchema, transmittedCare).recordedCare;
 };
 
 
-const setAllRecordedCare = async (stateStore: StateStore, transmittedRecordedCare: ARecordedCare[]) => {
+const setAllRecordedCare = async (stateStore: StateStore, care: ARecordedCare[]) => {
     const transmittedCare = {
-        recordedCare: transmittedRecordedCare.sort((a, b) => a.id.compare(b.id)), 
+        recordedCare: care.sort((a, b) => a.id.compare(b.id)), 
     };
 
     await stateStore.chain.set(

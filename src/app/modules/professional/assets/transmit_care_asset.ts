@@ -1,17 +1,29 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
 import { /*ProfessionalModuleProps,*/ TransmitCareAssetProps } from './register';
 
+
 const {
 	VALID_PATIENT_DOMAIN,
 	getAllPatientAccounts,
 
-} = require ('../../patient/assets/register');
+} = require ('../../patient/data/utils');
+
 
 
 const {
 	getAllProfessionalAccounts,
 
 } = require ('./register');
+
+
+
+const {
+	recordCare,
+	getAllRecordedCare,
+	setAllRecordedCare,
+	
+} = require ('../data/care')
+
 
 
 export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
@@ -68,7 +80,7 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('You must enter areaCode of your patient');
 		}
 
-		//This careSpecifications will be used only to update patient's medical record in his national database
+		//This careSpecifications will be used to update patient's medical record in his national database and plugin database
 		if (!asset.careSpecifications) {
 			throw new Error('Please update the cares specifications of your patient !')
 		}
@@ -79,8 +91,7 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
   	public async apply({ asset, transaction, stateStore }: ApplyAssetContext<TransmitCareAssetProps>): Promise<void> {
-		//const senderAddress = transaction.senderAddress;
-		//const senderAccount = stateStore.account.get<ProfessionalModuleProps>(senderAddress);
+		const senderAddress = transaction.senderAddress;
 		
 		//Verify if patient exists
 		const patientAccounts = await getAllPatientAccounts(stateStore);
@@ -115,16 +126,28 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('Transaction error !');
 		}
 		
-		//Must implement payment procedure
+		//create care for a patient
+		const care = recordCare({
+			patientIdentificationNumberIndex: asset.patientIdentificationNumber,
+			reverseLookup: asset.reverseLookup,
+			areaCode: asset.areaCode,
+			careSpecifications: asset.careSpecifications,
+			senderAddress: senderAddress,
+			nonce: transaction.nonce,
+		})
 
-
-
-
+		//update care database
+		const allCare = await getAllRecordedCare(stateStore);
+		allCare.push(care);
+		await setAllRecordedCare(stateStore, allCare);
 
 	}
 
 
+}
 
 
 
+module.exports = {
+	TransmitCareAsset,
 }
