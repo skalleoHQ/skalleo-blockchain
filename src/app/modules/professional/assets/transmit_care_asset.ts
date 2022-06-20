@@ -136,7 +136,7 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			nonce: transaction.nonce,
 		})
 
-		//update care database
+		//update care data chain
 		const allCare = await getAllRecordedCare(stateStore);
 		allCare.push(care);
 		await setAllRecordedCare(stateStore, allCare);

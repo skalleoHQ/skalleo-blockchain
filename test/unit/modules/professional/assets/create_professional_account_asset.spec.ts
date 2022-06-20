@@ -26,7 +26,7 @@ describe('CreateProfessionalAccountAsset', () => {
 
 	describe('validate', () => {
 		describe('schema validation', () => {
-			it('should if username has more than one domain', () => {
+			it('should throw error if username has more than one domain', () => {
 				const context = testing.createValidateAssetContext({
 					asset: { professionalIdentificationNumber: "3301012022", areaCode: "33_FRANCE", username: "PharmaciePorteD.Aix.pro" },
 					transaction: { senderAddress: Buffer.alloc(0) } as any,
@@ -70,7 +70,7 @@ describe('CreateProfessionalAccountAsset', () => {
 				)
 			});
 
-			it('should throw error if username doesnt a username', () => {
+			it('should throw error if professional doesnt have a username', () => {
 				const context = testing.createValidateAssetContext({
 					asset: { professionalIdentificationNumber: "3301012022", areaCode: "33_FRANCE", username: "" },
 					transaction: { senderAddress: Buffer.alloc(0) } as any,
