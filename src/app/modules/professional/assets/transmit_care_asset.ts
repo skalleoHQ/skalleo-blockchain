@@ -1,5 +1,5 @@
 import { BaseAsset, ApplyAssetContext, ValidateAssetContext } from 'lisk-sdk';
-import { /*ProfessionalModuleProps,*/ TransmitCareAssetProps } from './register';
+import { TransmitCareAssetProps } from './register';
 
 
 const {
