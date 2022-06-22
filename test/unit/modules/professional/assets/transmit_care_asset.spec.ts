@@ -164,21 +164,60 @@ describe('TransmitCareAsset', () => {
 		});
 
 		describe('invalid cases', () => {
-			/*it('should throw error patient not found', async() => {
+			it('should throw error if patient doesnt exist', async() => {
 				const context = testing.createApplyAssetContext({
+					stateStore,
 					asset: { patientIdentificationNumber: "3301012022", reverseLookup: "moussa.adh", areaCode: "221_SENEGAL", 
 						careSpecifications: "Juste un examen de prévention, Conclusion: le patient ne présente aucun problème" },
-					transaction: { senderAddress: Buffer.alloc(0) } as any
+					transaction: { senderAddress: proAccount1.address } as any
 				})
-
-				await transactionAsset.apply(context);
 
 				await expect(() => transactionAsset.apply(context)).rejects.toThrow(
 					'Patient not found !'
 				)
-			});*/
+			});
 
+			it('should throw error if patient data are wrong', async() => {
+				const context = testing.createApplyAssetContext({
+					stateStore,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh" },
+					transaction: { senderAddress: account.address } as any,
+				});
 
+				await createPatientAccountAsset.apply(context);
+
+				const context1 = testing.createApplyAssetContext({
+					stateStore,
+					asset: { patientIdentificationNumber: "3301012022", reverseLookup: "by.adh", areaCode: "221_SENEGAL", 
+						careSpecifications: "Juste un examen de prévention, Conclusion: le patient ne présente aucun problème" },
+					transaction: { senderAddress: proAccount.address } as any
+				})
+
+				await expect(() => transactionAsset.apply(context1)).rejects.toThrow(
+					'Patient not found !'
+				)
+			});
+
+			it('should throw error if patient data are wrong', async() => {
+				const context = testing.createApplyAssetContext({
+					stateStore,
+					asset: { patientIdentificationNumber: "3301012022", areaCode: "221_SENEGAL", username: "moussa.adh" },
+					transaction: { senderAddress: account1.address } as any,
+				});
+
+				await createPatientAccountAsset.apply(context);
+
+				const context1 = testing.createApplyAssetContext({
+					stateStore,
+					asset: { patientIdentificationNumber: "3301012022", reverseLookup: "moussa.adh", areaCode: "33_FRANCE", 
+						careSpecifications: "Juste un examen de prévention, Conclusion: le patient ne présente aucun problème" },
+					transaction: { senderAddress: proAccount1.address } as any
+				})
+
+				await expect(() => transactionAsset.apply(context1)).rejects.toThrow(
+					'Patient not found !'
+				)
+			});
 
 		});
 

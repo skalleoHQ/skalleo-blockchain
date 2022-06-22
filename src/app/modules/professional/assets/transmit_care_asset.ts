@@ -120,8 +120,13 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 		const addressIndex = professionalAccounts.findIndex((t) => t.ownerAddress === senderAddress);
 		
 		const professionalAccount = professionalAccounts[addressIndex];*/
-		const patientAccount = patientAccounts[patientIdentificationNumberIndex]; 
+		const patientAccount = patientAccounts[patientIdentificationNumberIndex];
 
+		if (patientAccount.areaCode !== asset.areaCode) {
+			throw new Error('Patient not found !');
+		}
+
+		//Verify if transaction is correct
 		if (senderAddress === patientAccount.ownerAddress) {
 			throw new Error('Transaction error !');
 		}
