@@ -145,7 +145,7 @@ describe('TransmitCareAsset', () => {
 					transaction: { senderAddress: account.address } as any,
 				});
 
-				//await createPatientAccountAsset.apply(context);
+				await createPatientAccountAsset.apply(context);
 
 				const context1 = testing.createApplyAssetContext({
 					stateStore,
@@ -154,7 +154,6 @@ describe('TransmitCareAsset', () => {
 					transaction: { senderAddress: proAccount.address } as any
 				})
 
-				await createPatientAccountAsset.apply(context);
 				await transactionAsset.apply(context1);
 				
 				expect(stateStore.chain.networkIdentifier).toEqual(context1.stateStore.chain.networkIdentifier);
