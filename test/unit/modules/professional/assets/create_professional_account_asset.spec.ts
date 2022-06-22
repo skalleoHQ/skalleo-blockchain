@@ -100,7 +100,7 @@ describe('CreateProfessionalAccountAsset', () => {
 		let account2: any;
 		let account3: any;
 		let account4: any;
-		let account5: any
+		let account5: any;
 
 
 		beforeEach(() => {

@@ -37,7 +37,7 @@ const recordedCareSchema = {
                         dataType: 'string',
                         fieldNumber: 5,
                     },
-                    specifications: {
+                    careSpecifications: {
                         dataType: 'string',
                         fieldNumber: 6,
                     },

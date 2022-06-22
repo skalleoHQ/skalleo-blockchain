@@ -102,7 +102,7 @@ const getAllProfessionalAccountsAsJSON = async (dataAccess: BaseModuleDataAccess
 };
 
 
-const setAllPatientAccounts = async (stateStore: StateStore, professionalAccounts: RegisteredProfessionalAccount[]) => {
+const setAllProfessionalAccounts = async (stateStore: StateStore, professionalAccounts: RegisteredProfessionalAccount[]) => {
     const registeredAccounts = {
         registeredProfessionalAccounts: professionalAccounts.sort((a, b) => a.id.compare(b.id)),
     };
@@ -127,7 +127,7 @@ module.exports = {
     registeredProfessionalAccountsSchema,
     createProfessionalAccount,
     getAllProfessionalAccounts,
-    setAllPatientAccounts,
+    setAllProfessionalAccounts,
     getAllProfessionalAccountsAsJSON,
     
 }

@@ -11,9 +11,9 @@ const {
 
 
 const {
-	getAllProfessionalAccounts,
+	//getAllProfessionalAccounts,
 
-} = require ('./register');
+} = require ('../data/utils')
 
 
 
@@ -116,13 +116,13 @@ export class TransmitCareAsset extends BaseAsset<TransmitCareAssetProps> {
 			throw new Error('Patient not found !');
 		}
 
-		const professionalAccounts = await getAllProfessionalAccounts(stateStore);
-		const addressIndex = professionalAccounts.findIndex((t) => t.ownerAddress === transaction.senderAddress);
+		/*const professionalAccounts = await getAllProfessionalAccounts(stateStore);
+		const addressIndex = professionalAccounts.findIndex((t) => t.ownerAddress === senderAddress);
 		
-		const professionalAccount = professionalAccounts[addressIndex];
+		const professionalAccount = professionalAccounts[addressIndex];*/
 		const patientAccount = patientAccounts[patientIdentificationNumberIndex]; 
 
-		if (professionalAccount.ownerAddress === patientAccount.ownerAddress) {
+		if (senderAddress === patientAccount.ownerAddress) {
 			throw new Error('Transaction error !');
 		}
 		

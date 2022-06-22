@@ -6,7 +6,7 @@ const {
 	VALID_PROFESSIONAL_DOMAIN,
 	getAllProfessionalAccounts,
 	createProfessionalAccount,
-	setAllPatientAccounts,
+	setAllProfessionalAccounts,
 
 } = require ('../data/utils')
 
@@ -127,7 +127,7 @@ export class CreateProfessionalAccountAsset extends BaseAsset<CreateProfessional
 		//save professional in database
 		const allAccounts = await getAllProfessionalAccounts(stateStore);
 		allAccounts.push(professionalAccount);
-		await setAllPatientAccounts(stateStore, allAccounts);
+		await setAllProfessionalAccounts(stateStore, allAccounts);
 
 	}
 
