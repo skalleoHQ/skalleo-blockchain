@@ -4,6 +4,6 @@ import { MedicalRecordPlugin } from "./plugins/medical_record/medical_record_plu
 
 // @ts-expect-error Unused variable error happens here until at least one module is registered
 export const registerPlugins = (_app: Application): void => {
-
+    app.registerPlugin(MedicalRecordPlugin);
     app.registerPlugin(MedicalRecordPlugin);
 };
