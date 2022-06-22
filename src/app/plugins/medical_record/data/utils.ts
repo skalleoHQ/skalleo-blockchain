@@ -74,6 +74,7 @@ const getAllTransactions = async (db, registeredSchema) => {
     for (const trx of savedTransactions) {
         transactions.push(decodeTransaction(trx, registeredSchema));
     }
+    
     return transactions;
 };
 
@@ -121,7 +122,8 @@ const savePatientHistory = async (db, decodedBlock, registeredModules, channel) 
             }
         }
     })
-}
+    
+};
 
 
 const decodeTransaction = (encodedTransaction, registeredSchema) => {
