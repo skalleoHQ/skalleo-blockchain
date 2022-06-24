@@ -77,12 +77,22 @@ const { getDBInstance,
 		this._app.use(cors({origin: '*', methods: ['GET', 'POST', 'PUT'] }));
 		this._app.use(express.join());
 
-		this._app.get('/api/patient_cares', async (req, res) => {
-			const patientAccounts = await this._channel.invoke('patient:getAllPatientAccounts');
+		this._app.get('/api/patients_care', async (req, res) => {
+			const recordedCare = await this._channel.invoke('professional:getAllRecordedCare');
+			const data = await Promise.all(recordedCare.map(async care => {
+				const dbKey = '${care.id}';
+				let patientHistory = await getPatientHistory(this._db, dbKey);
+				patientHistory = patientHistory.map(h => h.toString('binary'));
+
+				return {
+					...care,
+					patientHistory,
+				}
+			}));
 			
+			res.join({ data });
 		})
-		// this._channel = channel;
-		// this._channel.once('app:ready', () => {});
+		
 	};
 
 
