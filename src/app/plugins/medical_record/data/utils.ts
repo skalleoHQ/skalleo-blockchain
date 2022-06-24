@@ -1,3 +1,5 @@
+import { EncodedTransaction, EncodedTransactionSchemaProps } from "../encode";
+
 const fs_extra = require('fs-extra');
 const os = require('os');
 const path = require('path');
@@ -70,7 +72,7 @@ const getTransactions = async (db) => {
 
 const getAllTransactions = async (db, registeredSchema) => {
     const savedTransactions = await getTransactions(db);
-    const transactions = [];
+    const transactions: EncodedTransaction[] = [];
     for (const trx of savedTransactions) {
         transactions.push(decodeTransaction(trx, registeredSchema));
     }
@@ -126,7 +128,7 @@ const savePatientHistory = async (db, decodedBlock, registeredModules, channel) 
 };
 
 
-const decodeTransaction = (encodedTransaction, registeredSchema) => {
+const decodeTransaction = (encodedTransaction: EncodedTransactionSchemaProps, registeredSchema: EncodedTransaction) => {
     const transaction = codec.decode(registeredSchema.transaction, encodedTransaction);
     const assetSchema = getTransactionAssetSchema(transaction, registeredSchema);
     const asset = codec.decode(assetSchema, transaction.asset);
