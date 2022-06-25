@@ -149,7 +149,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 
 	async unload() {
 		// close http server
-		await new Promise((resolve, reject) => {
+		await new Promise<void>((resolve, reject) => {
 			this._server.close((err) => {
 				if (err) {
 					reject(err);
