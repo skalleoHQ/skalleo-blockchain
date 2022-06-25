@@ -165,5 +165,8 @@ export class MedicalRecordPlugin extends BasePlugin {
 	
 
 
+module.exports = {
+	MedicalRecordPlugin,
+}
 
 
