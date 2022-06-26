@@ -131,15 +131,17 @@ export class MedicalRecordPlugin extends BasePlugin {
 
 	_subscribeToChannel() {
 		// listen to application events and enrich blockchain data for UI/third party application
-		this._channel.subscribe('app:block:new', async (data) => {
+		this._channel.subscribe('app:block:new', async (data: any) => {
 			const { block } = data;
 			const { payload } = codec.decode(
-				this.schemas.block,
-				Buffer.from(block, 'hex'),
+			  	this.schemas.block,
+			  	Buffer.from(block, 'hex'),
 			);
+
 			if (payload.length > 0) {
 				await saveTransactions(this._db, payload);
 				const decodedBlock = this.codec.decodeBlock(block);
+
 				// save Patient transaction history
 				await savePatientHistory(this._db, decodedBlock, this._nodeInfo.registeredModules, this._channel);
 			}
