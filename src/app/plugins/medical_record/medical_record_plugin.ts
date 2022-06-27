@@ -79,7 +79,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 		this._app.use(express.join());
 
 
-		this._app.get('/api/patients_care', async (req, res) => {
+		this._app.get('/api/recorded_care', async (req, res) => {
 			const recordedCare: ARecordedCare[] = await this._channel.invoke('professional:getAllRecordedCare');
 			const data = await Promise.all(recordedCare.map(async care => {
 				const dbKey = '${care.id}';
@@ -96,7 +96,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 		});
 
 
-		this._app.get('/api/patients_care/:patientIdentificationNumber', async (req, res) => {
+		this._app.get('/api/recorded_care/:patientIdentificationNumber', async (req, res) => {
 			const recordedCare: ARecordedCare[] = await this._channel.invoke('professional:getAllRecordedCare');
 			const care = recordedCare.find((t) => t.patientIdentificationNumber === req.params.patientIdentificationNumber);
 			const dbKey = '${care.id}';
