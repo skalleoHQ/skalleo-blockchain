@@ -1,4 +1,12 @@
-import { Application, PartialApplicationConfig, configDevnet, genesisBlockDevnet, HTTPAPIPlugin, utils } from 'lisk-sdk';
+import { 
+	Application, 
+	PartialApplicationConfig, 
+	configDevnet, 
+	genesisBlockDevnet, 
+	utils,
+
+} from 'lisk-sdk';
+
 import { registerModules } from './modules';
 import { registerPlugins } from './plugins';
 
