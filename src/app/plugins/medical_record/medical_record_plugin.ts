@@ -79,7 +79,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 		this._app.use(express.join());
 
 
-		this._app.get('/api/recorded_care', async (req, res) => {
+		this._app.get('/api/recorded_care', async (req, res) => {// req is never used
 			const recordedCare: ARecordedCare[] = await this._channel.invoke('professional:getAllRecordedCare');
 			const data = await Promise.all(recordedCare.map(async care => {
 				const dbKey = '${care.id}';
