@@ -33,7 +33,7 @@
 			"distance": 3000000
 		},
 		"minRemainingBalance": "5000000",
-		"activeDelegates": 31,
+		"activeDelegates": 101,
 		"standbyDelegates": 2,
 		"delegateListRoundOffset": 2
 	},
