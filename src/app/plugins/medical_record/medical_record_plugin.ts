@@ -76,7 +76,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 		
 
 		this._app.use(cors({origin: '*', methods: ['GET', 'POST', 'PUT'] }));
-		this._app.use(express.join());
+		this._app.use(express.json());
 
 
 		this._app.get('/api/recorded_care', async (req, res) => {// req is never used
@@ -92,7 +92,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 				}
 			}));
 			
-			res.join({ data });
+			res.json({ data });
 		});
 
 
@@ -103,7 +103,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 			let patientHistory = await getPatientHistory(this._db, dbKey);
 			patientHistory = patientHistory.map(h => h.toString('binary'));
 
-			res.join({ data: { ...care, patientHistory } });
+			res.json({ data: { ...care, patientHistory } });
 		});
 
 
