@@ -7,6 +7,5 @@ import { HTTPAPIPlugin } from 'lisk-sdk';
 // ts-expect-error Unused variable error happens here until at least one module is registered
 export const registerPlugins = (app: Application): void => {
     app.registerPlugin(MedicalRecordPlugin);
-    app.registerPlugin(MedicalRecordPlugin);
     app.registerPlugin(HTTPAPIPlugin);
 };
