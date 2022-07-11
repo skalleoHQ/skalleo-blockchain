@@ -45,6 +45,8 @@ export class ProfessionalModule extends BaseModule {
         // Example below
         // getBalance: async (params) => this._dataAccess.account.get(params.address).token.balance,
         // getBlockByID: async (params) => this._dataAccess.blocks.get(params.id),
+
+        //getTransmittedCare
     };
     public reducers = {
         // Example below
