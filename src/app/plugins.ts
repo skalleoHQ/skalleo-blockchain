@@ -2,8 +2,6 @@
 import { Application } from 'lisk-sdk';
 
 import { MedicalRecordPlugin } from "./plugins/medical_record/medical_record_plugin";
-//import { HTTPAPIPlugin } from 'lisk-sdk';
-//import { ForgerPlugin } from 'lisk-sdk';
 
 import { DashboardPlugin } from '@liskhq/lisk-framework-dashboard-plugin';
 //import { FaucetPlugin } from '@liskhq/lisk-framework-faucet-plugin';

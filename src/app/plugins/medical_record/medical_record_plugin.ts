@@ -125,7 +125,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 	  
 		this._subscribeToChannel();
 	  
-		this._server = this._app.listen(8080, "0.0.0.0");
+		this._server = this._app.listen(8081, "0.0.0.0");
 	};
 
 
