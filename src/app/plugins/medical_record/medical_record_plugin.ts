@@ -48,7 +48,11 @@ export class MedicalRecordPlugin extends BasePlugin {
 			type: 'object',
 			properties: {},
 			required: [],
-			default: {},
+			default: {
+				applicationUrl: 'ws://localhost:8080/ws',
+				port: 4006,
+				host: '127.0.0.1',
+			},
 		}
 	};
 
@@ -125,7 +129,7 @@ export class MedicalRecordPlugin extends BasePlugin {
 	  
 		this._subscribeToChannel();
 	  
-		this._server = this._app.listen(8081, "0.0.0.0");
+		this._server = this._app.listen(4006, "127.0.0.1");
 	};
 
 
